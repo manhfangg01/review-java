@@ -5,24 +5,21 @@ import java.util.function.BiConsumer;
 
 public class LambdaExamples {
      void main() {
-        Comparator<String> stringComparator= new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.compareTo(o2);
-            }
-        };
+         /*
+         Nếu nó thấy đó là Tên Class (chữ cái đầu viết hoa, ví dụ String::toUpperCase, Claims::getSubject),
+         nó hiểu là: "À, đối số đầu tiên sẽ là thằng gọi hàm".
 
-        int compare = stringComparator.compare("a", "b");
-        System.out.printf("compare = %d%n", compare);
+         Nếu nó thấy đó là một Biến/Đối tượng (ví dụ myPrinter::print, System.out::println, examMapper::toResponse),
+         nó hiểu là: "À, thằng này có sẵn rồi, đối số truyền vào sẽ là tham số cho hàm của nó".
+          */
+         // Tạo 1 anonymous class
+         MyPrinter printer = System.out::println;
 
-        Comparator<String> lambdaComparator = String::compareTo;
-        Comparator<Integer> integerComparator = Integer::compare;
+         printer.printCustom("Hello World!");
+         printer.printWithTimestamp("Hello World!");
+         MyPrinter.printSystemHeader("Hello World!");
 
-        int compare1 =lambdaComparator.compare("a", "b");
-        int compare2 =integerComparator.compare(1,2);
 
-        BiConsumer<Integer,Integer> consumer = (a, b) -> System.out.println("With lambda"+a+b);
-        consumer.accept(compare1,compare2);
 
     }
 }
