@@ -5,18 +5,26 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 
 public class LambdaExamples {
-    int limit = 3;
-
-    void doIt(){
-        List<String> names=List.of("Java", "Python", "C++", "JavaScript", "Go");
-        names.stream().filter(name -> name.length() > limit).forEach(System.out::println);
-        limit++;
-        System.out.println("-------------------------------");
-    }
     void main() {
-        doIt();
-        doIt();
+        Receiver receiver = msg -> {
+            Predicate<String> filter = Predicate.not(String::isBlank);
+            Function<String, String> function = mess -> "[LOG]"+ mess.toUpperCase() ;
+            Consumer<String> consumer = System.out::println;
+
+            if(filter.test(msg)) {
+               String drop= function.apply(msg);
+               consumer.accept(drop);
+            }
+            else  {
+                System.out.println("Lo");
+            }
+        };
+        receiver.process("Hello");
     }
 }
